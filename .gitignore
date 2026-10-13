@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+db.sqlite3
+staticfiles/
+media/
+.coverage
+htmlcov/
+deploy/certs/*
+!deploy/certs/.gitkeep

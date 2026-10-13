@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block titulo %}Painel{% endblock %}
+{% block conteudo %}
+<section class="faixa">
+  <div>
+    <p class="sobretitulo">ERP Worksys</p>
+    <h1>Olá, {{ user.first_name|default:user.username }}</h1>
+    <p class="faixa-texto">
+      {% if consolidado %}Você está vendo a visão <strong>consolidada</strong> das empresas.
+      {% elif empresa_ativa %}Você está trabalhando em <strong>{{ empresa_ativa.nome_fantasia }}</strong> ({{ empresa_ativa.get_regime_tributario_display }}).
+      {% else %}Seu usuário ainda não tem acesso a nenhuma empresa. Peça ao administrador para liberar.
+      {% endif %}
+    </p>
+  </div>
+</section>
+
+<h2 class="titulo-secao">Módulos</h2>
+<div class="cartoes">
+  {% for m in modulos %}
+  <article class="cartao {% if not m.url_name %}cartao-futuro{% endif %}">
+    <div class="cartao-icone">{% include "partials/icone.html" with nome=m.icone %}</div>
+    <h3>{{ m.nome }}</h3>
+    <p>{{ m.descricao }}</p>
+    {% if m.url_name %}<a class="botao" href="{% url m.url_name %}">Abrir</a>
+    {% else %}<span class="etiqueta">Em breve · fase {{ m.fase }}</span>{% endif %}
+  </article>
+  {% endfor %}
+</div>
+{% endblock %}
