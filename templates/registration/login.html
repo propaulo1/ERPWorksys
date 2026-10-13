@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block titulo %}Entrar{% endblock %}
+{% block body_class %}pagina-login{% endblock %}
+{% block corpo %}
+<main class="login">
+  <section class="login-lado">
+    <div class="marca-login">{% include "partials/logo.html" %}</div>
+    <h1>Transforme a gestão com soluções eficientes</h1>
+    <p>Financeiro, comercial, projetos, estoque, suporte e campo em um só sistema.</p>
+  </section>
+  <section class="login-form">
+    <form method="post" class="formulario" novalidate>
+      {% csrf_token %}
+      <h2>Entrar</h2>
+      {% if form.non_field_errors %}<div class="mensagem error">Usuário ou senha incorretos.</div>{% endif %}
+      <label for="id_username">Usuário</label>
+      <input type="text" name="username" id="id_username" autocomplete="username" autofocus required value="{{ form.username.value|default:'' }}">
+      <label for="id_password">Senha</label>
+      <input type="password" name="password" id="id_password" autocomplete="current-password" required>
+      <input type="hidden" name="next" value="{{ next }}">
+      <button type="submit" class="botao botao-largo">Entrar</button>
+    </form>
+  </section>
+</main>
+{% endblock %}

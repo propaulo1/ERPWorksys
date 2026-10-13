@@ -1,0 +1,81 @@
+{% load static %}<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d2b45">
+  <title>{% block titulo %}Painel{% endblock %} · ERP Worksys</title>
+  <link rel="icon" href="{% static 'img/favicon.svg' %}" type="image/svg+xml">
+  <link rel="stylesheet" href="{% static 'css/worksys.css' %}">
+  {% block head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+{% block corpo %}
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <a class="marca" href="{% url 'core:painel' %}">{% include "partials/logo.html" %}</a>
+    <nav class="menu" aria-label="Módulos">
+      <a href="{% url 'core:painel' %}" class="menu-item {% if request.resolver_match.url_name == 'painel' %}ativo{% endif %}">
+        {% include "partials/icone.html" with nome="painel" %}<span>Painel</span>
+      </a>
+      {% for m in menu_modulos %}
+        <span class="menu-item desabilitado" title="Previsto para a fase {{ m.fase }}">
+          {% include "partials/icone.html" with nome=m.icone %}<span>{{ m.nome }}</span><small>fase {{ m.fase }}</small>
+        </span>
+      {% endfor %}
+      {% if user.is_staff %}
+      <a href="{% url 'admin:index' %}" class="menu-item">
+        {% include "partials/icone.html" with nome="engrenagem" %}<span>Administração</span>
+      </a>
+      {% endif %}
+    </nav>
+  </aside>
+
+  <div class="principal">
+    <header class="topo">
+      <button class="botao-menu" type="button" aria-label="Abrir menu" aria-controls="sidebar"
+              onclick="document.body.classList.toggle('menu-aberto')">
+        {% include "partials/icone.html" with nome="menu" %}
+      </button>
+
+      {% if empresas_disponiveis %}
+      <form method="post" action="{% url 'core:selecionar_empresa' %}" class="seletor-empresa">
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <label for="empresa-ativa">Empresa</label>
+        <select id="empresa-ativa" name="empresa" onchange="this.form.submit()">
+          {% for e in empresas_disponiveis %}
+            <option value="{{ e.pk }}" {% if empresa_ativa and empresa_ativa.pk == e.pk %}selected{% endif %}>{{ e.sigla }} · {{ e.get_regime_tributario_display }}</option>
+          {% endfor %}
+          {% if empresas_disponiveis|length > 1 %}
+            <option value="{{ CONSOLIDADO }}" {% if consolidado %}selected{% endif %}>Consolidado</option>
+          {% endif %}
+        </select>
+        <noscript><button type="submit" class="botao botao-secundario">Trocar</button></noscript>
+      </form>
+      {% endif %}
+
+      <div class="usuario">
+        <span class="usuario-nome">{{ user }}<small>{{ user.get_perfil_display }}</small></span>
+        <a href="{% url 'accounts:senha' %}" class="link-discreto">Senha</a>
+        <form method="post" action="{% url 'accounts:logout' %}">
+          {% csrf_token %}
+          <button type="submit" class="botao botao-secundario">Sair</button>
+        </form>
+      </div>
+    </header>
+
+    <main class="conteudo">
+      {% if messages %}
+        <ul class="mensagens">
+          {% for message in messages %}<li class="mensagem {{ message.tags }}">{{ message }}</li>{% endfor %}
+        </ul>
+      {% endif %}
+      {% block conteudo %}{% endblock %}
+    </main>
+  </div>
+</div>
+<div class="fundo-menu" onclick="document.body.classList.remove('menu-aberto')"></div>
+{% endblock %}
+</body>
+</html>

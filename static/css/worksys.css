@@ -1,0 +1,121 @@
+/* ERP Worksys — identidade visual inspirada em www.wsredes.com.br.
+   As cores são provisórias: ajuste as variáveis abaixo com as cores oficiais. */
+:root {
+  --cor-primaria: #0d2b45;        /* azul-marinho: barra lateral, títulos */
+  --cor-primaria-clara: #16405f;
+  --cor-destaque: #0a8fd1;        /* azul telecom: botões, links, ícones */
+  --cor-destaque-escura: #0874aa;
+  --cor-fundo: #f3f6f9;
+  --cor-superficie: #ffffff;
+  --cor-texto: #1d2733;
+  --cor-texto-suave: #5d6b7a;
+  --cor-borda: #dde4eb;
+  --cor-sucesso: #1f8a4c;
+  --cor-erro: #c0392b;
+  --cor-aviso: #b7791f;
+  --raio: 10px;
+  --sombra: 0 1px 2px rgba(13, 43, 69, .06), 0 4px 16px rgba(13, 43, 69, .06);
+  --largura-menu: 240px;
+  --fonte: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { font-family: var(--fonte); background: var(--cor-fundo); color: var(--cor-texto); font-size: 15px; line-height: 1.5; }
+a { color: var(--cor-destaque); }
+h1, h2, h3 { color: var(--cor-primaria); line-height: 1.25; }
+h1 { font-size: 1.6rem; margin: 0 0 .5rem; }
+
+/* Estrutura */
+.app { display: flex; min-height: 100vh; }
+.sidebar { width: var(--largura-menu); flex-shrink: 0; background: var(--cor-primaria); color: #fff; display: flex; flex-direction: column; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.marca { display: block; padding: 18px 20px; color: #fff; border-bottom: 1px solid rgba(255,255,255,.08); }
+.logo { height: 34px; width: auto; display: block; }
+.menu { display: flex; flex-direction: column; padding: 12px 10px; gap: 2px; }
+.menu-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; color: rgba(255,255,255,.85); text-decoration: none; font-weight: 500; }
+.menu-item:hover { background: var(--cor-primaria-clara); color: #fff; }
+.menu-item.ativo { background: var(--cor-destaque); color: #fff; }
+.menu-item.desabilitado { color: rgba(255,255,255,.4); cursor: default; }
+.menu-item.desabilitado:hover { background: none; }
+.menu-item small { margin-left: auto; font-size: .7rem; text-transform: uppercase; letter-spacing: .04em; }
+.icone { width: 20px; height: 20px; flex-shrink: 0; }
+
+.principal { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.topo { display: flex; align-items: center; gap: 16px; padding: 10px 24px; background: var(--cor-superficie); border-bottom: 1px solid var(--cor-borda); position: sticky; top: 0; z-index: 5; }
+.botao-menu { display: none; background: none; border: 0; color: var(--cor-primaria); padding: 6px; cursor: pointer; }
+.seletor-empresa { display: flex; align-items: center; gap: 8px; }
+.seletor-empresa label { font-size: .8rem; color: var(--cor-texto-suave); text-transform: uppercase; letter-spacing: .05em; }
+.seletor-empresa select { min-width: 220px; }
+.usuario { margin-left: auto; display: flex; align-items: center; gap: 14px; }
+.usuario form { margin: 0; }
+.usuario-nome { display: flex; flex-direction: column; text-align: right; font-weight: 600; font-size: .9rem; }
+.usuario-nome small { font-weight: 400; color: var(--cor-texto-suave); }
+.link-discreto { color: var(--cor-texto-suave); font-size: .85rem; }
+.conteudo { padding: 24px; max-width: 1280px; width: 100%; }
+
+/* Componentes */
+.botao { display: inline-block; background: var(--cor-destaque); color: #fff; border: 0; border-radius: 8px; padding: 9px 18px; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; text-transform: uppercase; letter-spacing: .03em; font-size: .85rem; }
+.botao:hover { background: var(--cor-destaque-escura); }
+.botao-secundario { background: transparent; color: var(--cor-primaria); border: 1px solid var(--cor-borda); text-transform: none; letter-spacing: 0; padding: 6px 12px; }
+.botao-secundario:hover { background: var(--cor-fundo); }
+.botao-largo { width: 100%; padding: 12px; }
+
+input[type=text], input[type=password], input[type=email], select, textarea {
+  font: inherit; color: inherit; padding: 9px 12px; border: 1px solid var(--cor-borda); border-radius: 8px; background: #fff; width: 100%;
+}
+.seletor-empresa select { width: auto; }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--cor-destaque); outline-offset: 1px; border-color: transparent; }
+
+.formulario { display: flex; flex-direction: column; gap: 6px; }
+.formulario label { font-weight: 600; font-size: .9rem; margin-top: 8px; }
+.formulario button { margin-top: 16px; }
+.formulario-estreito { max-width: 420px; }
+.erro-campo { color: var(--cor-erro); margin: 0; font-size: .85rem; }
+
+.mensagens { list-style: none; padding: 0; margin: 0 0 16px; }
+.mensagem { padding: 10px 14px; border-radius: 8px; background: #e8f4fb; border-left: 4px solid var(--cor-destaque); margin-bottom: 8px; }
+.mensagem.error { background: #fbeceb; border-color: var(--cor-erro); }
+.mensagem.success { background: #e9f6ee; border-color: var(--cor-sucesso); }
+
+.faixa { background: linear-gradient(120deg, var(--cor-primaria), var(--cor-primaria-clara) 60%, var(--cor-destaque)); color: #fff; border-radius: var(--raio); padding: 28px 32px; margin-bottom: 28px; }
+.faixa h1 { color: #fff; }
+.faixa-texto { margin: 0; opacity: .9; }
+.sobretitulo { margin: 0 0 4px; text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; opacity: .8; }
+.titulo-secao { font-size: 1.1rem; margin: 0 0 14px; }
+
+.cartoes { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+.cartao { background: var(--cor-superficie); border: 1px solid var(--cor-borda); border-radius: var(--raio); padding: 20px; box-shadow: var(--sombra); display: flex; flex-direction: column; gap: 8px; }
+.cartao h3 { margin: 4px 0 0; font-size: 1.05rem; }
+.cartao p { margin: 0; color: var(--cor-texto-suave); flex: 1; }
+.cartao-icone { width: 42px; height: 42px; border-radius: 10px; background: #e6f3fa; color: var(--cor-destaque); display: grid; place-items: center; }
+.cartao-icone .icone { width: 24px; height: 24px; }
+.cartao-futuro { opacity: .85; }
+.etiqueta { align-self: flex-start; font-size: .75rem; font-weight: 600; padding: 3px 10px; border-radius: 99px; background: var(--cor-fundo); color: var(--cor-texto-suave); }
+
+/* Login */
+.login { display: grid; grid-template-columns: 1.1fr 1fr; min-height: 100vh; }
+.login-lado { background: linear-gradient(140deg, var(--cor-primaria), var(--cor-primaria-clara) 55%, var(--cor-destaque)); color: #fff; padding: 56px; display: flex; flex-direction: column; justify-content: center; }
+.login-lado h1 { color: #fff; font-size: 2.1rem; text-transform: uppercase; max-width: 15ch; margin-top: 40px; }
+.login-lado p { opacity: .85; max-width: 40ch; }
+.marca-login { color: #fff; }
+.marca-login .logo { height: 44px; }
+.login-form { display: grid; place-items: center; padding: 32px; background: var(--cor-superficie); }
+.login-form .formulario { width: 100%; max-width: 360px; }
+.login-form h2 { margin: 0 0 8px; }
+
+/* Celular */
+.fundo-menu { display: none; }
+@media (max-width: 860px) {
+  .sidebar { position: fixed; left: 0; top: 0; z-index: 20; transform: translateX(-100%); transition: transform .2s; }
+  body.menu-aberto .sidebar { transform: none; }
+  body.menu-aberto .fundo-menu { display: block; position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 10; }
+  .botao-menu { display: block; }
+  .topo { padding: 8px 16px; gap: 10px; flex-wrap: wrap; }
+  .seletor-empresa label, .usuario-nome small, .link-discreto { display: none; }
+  .seletor-empresa select { min-width: 0; max-width: 180px; }
+  .conteudo { padding: 16px; }
+  .faixa { padding: 20px; }
+  .login { grid-template-columns: 1fr; }
+  .login-lado { padding: 32px 24px; }
+  .login-lado h1 { font-size: 1.4rem; margin-top: 20px; }
+}
